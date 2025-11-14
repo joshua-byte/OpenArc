@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenArc • Futuristic CS Preprint Network</title>
+
+  <style>
+    /* ============================================================
+       FUTURISTIC CS LAB / AI-STARTUP UI THEME
+       ============================================================ */
+
+    :root{
+      --bg:#0b0f19;
+      --panel:#111729;
+      --panel2:#131b2f;
+      --text:#e9ecf3;
+      --muted:#94a3b8;
+      --accent:#4f46e5;
+      --accent-glow:#6366f1;
+      --border:#1c253b;
+      --radius:12px;
+      --shadow:0 0 30px rgba(100, 120, 255, 0.12);
+    }
+
+    body{
+      margin:0;
+      font-family: "Inter", sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* HEADER */
+    header{
+      background:#0d1326;
+      padding:22px 24px;
+      border-bottom:1px solid #1b2335;
+      box-shadow: var(--shadow);
+    }
+
+    .header-inner{
+      max-width:1100px;
+      margin:auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .logo{
+      width:46px;height:46px;
+      border-radius:10px;
+      background: linear-gradient(135deg,#3b82f6,#4f46e5);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      font-size:18px;
+      color:white;
+      box-shadow:0 0 12px rgba(79,70,229,0.5);
+    }
+
+    .brand h1{
+      margin:0;
+      font-size:22px;
+      font-weight:700;
+    }
+
+    .controls{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .search{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      background:var(--panel2);
+      border:1px solid var(--border);
+      border-radius:999px;
+    }
+    .search input{
+      background:transparent;
+      border:0;
+      color:var(--text);
+      width:160px;
+      outline:none;
+    }
+
+    .btn{
+      background:var(--panel2);
+      padding:9px 16px;
+      border-radius:8px;
+      border:1px solid var(--border);
+      color:var(--text);
+      font-weight:600;
+      cursor:pointer;
+      transition:0.15s;
+    }
+
+    .btn:hover{
+      background:#1c2440;
+      box-shadow:0 0 10px rgba(80,80,255,0.25);
+    }
+
+    .btn.primary{
+      background:var(--accent);
+      border-color:var(--accent);
+      box-shadow:0 0 16px rgba(99,102,241,0.4);
+    }
+
+    /* LAYOUT */
+    .layout{
+      max-width:1100px;
+      margin:30px auto;
+      display:grid;
+      grid-template-columns: 1fr 300px;
+      gap:24px;
+      padding:0 20px;
+    }
+
+    .panel{
+      background:var(--panel);
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow: var(--shadow);
+      border:1px solid var(--border);
+    }
+
+    .chip{
+      display:inline-block;
+      padding:6px 12px;
+      background:#1a2236;
+      border:1px solid #29334a;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:13px;
+      margin-right:6px;
+      color:var(--muted);
+    }
+    .chip.active{
+      background:var(--accent);
+      color:white;
+      border-color:var(--accent);
+      box-shadow:0 0 12px rgba(99,102,241,0.6);
+    }
+
+    /* LIST */
+    .item{
+      background:var(--panel2);
+      padding:16px;
+      border-radius:10px;
+      margin-bottom:12px;
+      cursor:pointer;
+      border:1px solid #222b43;
+      transition:0.15s;
+    }
+    .item:hover{
+      background:#1a2035;
+      border-color:#2c3a67;
+      box-shadow:0 0 16px rgba(80,90,255,0.25);
+    }
+
+    .title{
+      font-size:18px;
+      font-weight:700;
+      color:white;
+      margin-bottom:6px;
+    }
+    .abstract{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+    }
+    .doi{
+      margin-top:8px;
+      font-size:13px;
+      background:#1f2942;
+      padding:4px 8px;
+      border-radius:6px;
+      display:inline-block;
+      color:#a5b4fc;
+      border:1px solid #303a5a;
+    }
+
+    /* DETAIL */
+    #detail-panel{
+      display:none;
+      margin-top:20px;
+    }
+
+    .detail-title{
+      font-size:22px;
+      font-weight:700;
+      margin-bottom:6px;
+      color:white;
+    }
+
+    .detail-meta{
+      color:var(--muted);
+      font-size:14px;
+      margin-bottom:16px;
+    }
+
+    .download{
+      display:inline-block;
+      margin-top:16px;
+      padding:10px 16px;
+      background:var(--accent);
+      border-radius:6px;
+      text-decoration:none;
+      color:white;
+      font-weight:600;
+      box-shadow:0 0 14px rgba(99,102,241,0.5);
+    }
+
+    /* UPLOAD MODAL */
+    #modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.6);
+      backdrop-filter:blur(6px);
+      justify-content:center;
+      align-items:center;
+      z-index:999;
+    }
+
+    .modal-box{
+      width:92%;
+      max-width:600px;
+      background:var(--panel);
+      padding:20px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+
+    input, textarea, select{
+      width:100%;
+      padding:10px;
+      margin:10px 0;
+      border-radius:8px;
+      border:1px solid #2a3450;
+      background:#0d1326;
+      color:var(--text);
+      font-size:15px;
+    }
+
+    /* PDF VIEWER */
+    #pdf-viewer{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:#000;
+      z-index:1000;
+    }
+    #pdf-frame{
+      width:100%;
+      height:100%;
+      border:0;
+    }
+    #close-pdf{
+      position:absolute;
+      top:20px;
+      right:20px;
+      background:#ef4444;
+      padding:10px 14px;
+      border-radius:6px;
+      font-weight:700;
+      cursor:pointer;
+      color:white;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo">OA</div>
+        <h1>OpenArc</h1>
+      </div>
+
+      <div class="controls">
+        <div class="search">
+          <input id="q" type="search" placeholder="Search preprints...">
+        </div>
+
+        <button class="btn" id="upload-btn">Upload</button>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- LAYOUT -->
+  <div class="layout">
+
+    <!-- MAIN LIST -->
+    <main>
+      <div class="panel">
+        <h2 style="margin-top:0">Recent Preprints</h2>
+
+        <div style="margin:12px 0;">
+          <span class="chip active" data-cat="all">All</span>
+          <span class="chip" data-cat="cs">CS</span>
+          <span class="chip" data-cat="ai">AI</span>
+          <span class="chip" data-cat="math">Math</span>
+          <span class="chip" data-cat="physics">Physics</span>
+        </div>
+
+        <div id="list"></div>
+      </div>
+
+      <!-- DETAIL -->
+      <div id="detail-panel" class="panel">
+        <div id="detail-content"></div>
+      </div>
+
+    </main>
+
+
+    <!-- SIDEBAR -->
+    <aside>
+      <div class="panel">
+        <h3>Actions</h3>
+        <button class="btn primary" id="upload-btn2">Upload Preprint</button>
+
+        <h3 style="margin-top:20px">Export</h3>
+        <button class="btn" id="export-btn">Export Metadata</button>
+      </div>
+    </aside>
+
+  </div>
+
+
+  <!-- UPLOAD MODAL -->
+  <div id="modal">
+    <div class="modal-box">
+      <h2 style="margin-top:0">Upload Preprint</h2>
+
+      <form id="upload-form">
+        <input type="text" name="title" placeholder="Title" required>
+        <select name="category">
+          <option value="cs">Computer Science</option>
+          <option value="ai">AI / ML</option>
+          <option value="math">Mathematics</option>
+          <option value="physics">Physics</option>
+        </select>
+        <textarea name="abstract" rows="6" placeholder="Abstract" required></textarea>
+
+        <label style="display:flex;align-items:center;gap:8px;margin:8px 0">
+          <input type="checkbox" name="mint_doi" value="true">
+          Mint a DOI (fake local DOI)
+        </label>
+
+        <input type="file" name="pdf_file" accept="application/pdf" required>
+
+        <button class="btn primary" type="submit">Upload</button>
+        <button class="btn" id="cancel-upload">Cancel</button>
+        <div id="upload-msg" style="color:var(--muted)"></div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- PDF VIEWER -->
+  <div id="pdf-viewer">
+    <iframe id="pdf-frame"></iframe>
+    <div id="close-pdf">Close</div>
+  </div>
+
+
+<script>
+  const API = "http://localhost:5001/api/preprints";
+  const qs = s => document.querySelector(s);
+  const qsa = s => Array.from(document.querySelectorAll(s));
+
+  let all = [];
+  let cat = "all";
+  let query = "";
+
+  /* Loading Preprints */
+  async function load(){
+    const res = await fetch(API + "/");
+    all = await res.json();
+    render();
+  }
+
+  function match(p){
+    if(cat !== "all" && p.category !== cat) return false;
+    if(!query) return true;
+    const q = query.toLowerCase();
+    return p.title.toLowerCase().includes(q) || p.abstract.toLowerCase().includes(q);
+  }
+
+  function render(){
+    const list = qs("#list");
+    const items = all.filter(match);
+
+    if(items.length === 0){
+      list.innerHTML = "<p style='color:var(--muted)'>No preprints found.</p>";
+      return;
+    }
+
+    list.innerHTML = items.map(p => `
+      <div class="item" data-id="${p.id}">
+        <div class="title">${p.title}</div>
+        <div class="abstract">${p.abstract.slice(0,200)}...</div>
+        <div class="doi">${p.doi ? p.doi : p.category}</div>
+      </div>
+    `).join("");
+
+    qsa(".item").forEach(el =>
+      el.onclick = () => openDetail(el.dataset.id)
+    );
+  }
+
+  /* DETAIL */
+  async function openDetail(id){
+    const res = await fetch(`${API}/${id}/`);
+    const p = await res.json();
+    const box = qs("#detail-content");
+
+    box.innerHTML = `
+      <div class="detail-title">${p.title}</div>
+      <div class="detail-meta">
+        <div>Uploaded: ${p.uploaded_at}</div>
+        <div>Version: ${p.version}</div>
+        <div>Category: ${p.category}</div>
+      </div>
+      <div style="color:var(--muted)">${p.abstract}</div>
+
+      <div style="margin-top:20px;display:flex;gap:12px">
+        <button class="btn primary" onclick="viewPDF('${p.pdf_file}')">View PDF</button>
+        <a class="download" href="${p.pdf_file}" download>Download PDF</a>
+      </div>
+
+      ${p.doi ? `<div class="doi" style="margin-top:16px">${p.doi}</div>` : ""}
+    `;
+
+    qs("#detail-panel").style.display = "block";
+    qs("#detail-panel").scrollIntoView({behavior:"smooth"});
+  }
+
+  /* PDF viewer */
+  function viewPDF(url){
+    qs("#pdf-frame").src = url;
+    qs("#pdf-viewer").style.display = "block";
+  }
+  qs("#close-pdf").onclick = () => {
+    qs("#pdf-viewer").style.display = "none";
+    qs("#pdf-frame").src = "";
+  };
+
+  /* Upload Modal */
+  function openModal(){ qs("#modal").style.display = "flex"; }
+  function closeModal(){ qs("#modal").style.display = "none"; }
+
+  qs("#upload-btn").onclick = openModal;
+  qs("#upload-btn2").onclick = openModal;
+  qs("#cancel-upload").onclick = e => { e.preventDefault(); closeModal(); };
+
+  qs("#upload-form").onsubmit = async e =>{
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const res = await fetch(API + "/", { method:"POST", body:fd });
+
+    if(!res.ok){
+      qs("#upload-msg").textContent = "Upload failed";
+      return;
+    }
+
+    qs("#upload-msg").textContent = "Uploaded!";
+    setTimeout(closeModal, 700);
+    await load();
+  };
+
+  /* Filters */
+  qsa(".chip").forEach(c =>
+    c.onclick = () => {
+      qsa(".chip").forEach(x => x.classList.remove("active"));
+      c.classList.add("active");
+      cat = c.dataset.cat;
+      render();
+    }
+  );
+
+  /* Search */
+  qs("#q").oninput = e => {
+    query = e.target.value;
+    render();
+  };
+
+  /* Export */
+  qs("#export-btn").onclick = () => {
+    const blob = new Blob([JSON.stringify(all,null,2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "openarc-preprints.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  load();
+</script>
+
+</body>
+</html>
